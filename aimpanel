@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FF Keymapper Panel</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 15px;
+    }
+    h1 { color: #00ff80; text-align: center; margin: 10px 0; }
+    .status { padding: 15px; background: #111; border-radius: 12px; text-align: center; font-size: 19px; margin: 15px 0; }
+    button {
+      width: 100%;
+      padding: 16px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: bold;
+    }
+    .btn-on { background: #00ff80; color: black; }
+    .btn-red { background: #ff4444; color: white; }
+    label { display: block; margin: 12px 0 6px; font-size: 16px; }
+    input[type="range"] { width: 100%; accent-color: #00ff80; }
+    .value { color: #00ff80; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>🔥 FREE FIRE KEYMAPPER PANEL</h1>
+  <p style="text-align:center; color:#aaa;">iPhone 11 - Ultra Headshot</p>
+
+  <div class="status" id="status">AIMBOT: <span style="color:#00ff80">ACTIVADO</span></div>
+
+  <button class="btn-on" onclick="toggleAimbot()">🔄 ON / OFF AIMBOT</button>
+  <button class="btn-on" onclick="openFreeFire()">🎮 ABRIR FREE FIRE</button>
+
+  <label>FOV: <span class="value" id="fovVal">360</span></label>
+  <input type="range" min="150" max="500" value="360" id="fov" oninput="updateValues()">
+
+  <label>Smoothness: <span class="value" id="smoothVal">0.045</span></label>
+  <input type="range" min="0.01" max="0.1" step="0.001" value="0.045" id="smooth" oninput="updateValues()">
+
+  <label>Vertical Force (Cabeza): <span class="value" id="vertVal">-2.25</span></label>
+  <input type="range" min="-5" max="0" step="0.05" value="-2.25" id="vert" oninput="updateValues()">
+
+  <label>Prediction: <span class="value" id="predVal">0.155</span></label>
+  <input type="range" min="0" max="0.3" step="0.005" value="0.155" id="pred" oninput="updateValues()">
+
+  <label>Horizontal Lock: <span class="value" id="horizVal">0.38</span></label>
+  <input type="range" min="0.1" max="1" step="0.01" value="0.38" id="horiz" oninput="updateValues()">
+
+  <label>Recoil Compensation: <span class="value" id="recoilVal">0.78</span></label>
+  <input type="range" min="0" max="1" step="0.01" value="0.78" id="recoil" oninput="updateValues()">
+
+  <label>Anti-Stick Prevention: <span class="value" id="stickVal">0.055</span></label>
+  <input type="range" min="0" max="0.1" step="0.005" value="0.055" id="stick" oninput="updateValues()">
+
+  <button class="btn-red" onclick="resetAll()">RESET ALL TO DEFAULT</button>
+
+  <script>
+    let aimbotEnabled = true;
+
+    function toggleAimbot() {
+      aimbotEnabled = !aimbotEnabled;
+      document.getElementById('status').innerHTML = `AIMBOT: <span style="color:${aimbotEnabled ? '#00ff80' : '#ff4444'}">${aimbotEnabled ? 'ACTIVADO' : 'DESACTIVADO'}</span>`;
+    }
+
+    function updateValues() {
+      document.getElementById('fovVal').textContent = document.getElementById('fov').value;
+      document.getElementById('smoothVal').textContent = parseFloat(document.getElementById('smooth').value).toFixed(3);
+      document.getElementById('vertVal').textContent = document.getElementById('vert').value;
+      document.getElementById('predVal').textContent = parseFloat(document.getElementById('pred').value).toFixed(3);
+      document.getElementById('horizVal').textContent = parseFloat(document.getElementById('horiz').value).toFixed(2);
+      document.getElementById('recoilVal').textContent = parseFloat(document.getElementById('recoil').value).toFixed(2);
+      document.getElementById('stickVal').textContent = parseFloat(document.getElementById('stick').value).toFixed(3);
+    }
+
+    function resetAll() {
+      document.getElementById('fov').value = 360;
+      document.getElementById('smooth').value = 0.045;
+      document.getElementById('vert').value = -2.25;
+      document.getElementById('pred').value = 0.155;
+      document.getElementById('horiz').value = 0.38;
+      document.getElementById('recoil').value = 0.78;
+      document.getElementById('stick').value = 0.055;
+      updateValues();
+      alert("✅ Todos los valores han sido reseteados");
+    }
+
+    function openFreeFire() {
+      alert("Intentando abrir Free Fire...");
+      window.location.href = "freefire://";  // Intenta abrir la app
+      setTimeout(() => {
+        alert("Si no se abrió, abre Free Fire manualmente desde la pantalla de inicio.");
+      }, 800);
+    }
+
+    // Inicializar
+    updateValues();
+  </script>
+</body>
+</html> 
