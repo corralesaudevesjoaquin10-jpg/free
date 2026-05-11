@@ -9,7 +9,7 @@
     h1 { color:#00ff80; text-align:center; }
     .tab { padding:15px; background:#1a1a1a; margin:12px 0; border-radius:12px; }
     button { width:100%; padding:15px; margin:8px 0; border:none; border-radius:12px; font-size:17px; font-weight:bold; }
-    .btn-copy { background:#00cc66; color:black; }
+    .btn-activate { background:#0088ff; color:white; }
     .btn-red { background:#ff4444; color:white; }
     textarea { width:100%; height:260px; background:#111; color:#0f0; border:none; border-radius:8px; padding:10px; font-size:13px; }
   </style>
@@ -22,35 +22,35 @@
   <!-- AIMBOT ULTRA -->
   <div class="tab">
     <h2>🎯 Aimbot Ultra Headshot</h2>
-    <button class="btn-copy" onclick="copyAimbot()">📋 Copiar Aimbot</button>
+    <button class="btn-activate" onclick="activateAimbot()">▶ Activar Aimbot</button>
     <textarea id="aimbotCode" readonly></textarea>
   </div>
 
   <!-- SEMI APUNTADO -->
   <div class="tab">
     <h2>🎯 Semi Apuntado</h2>
-    <button class="btn-copy" onclick="copySemi()">📋 Copiar Semi Apuntado</button>
+    <button class="btn-activate" onclick="activateSemi()">▶ Activar Semi Apuntado</button>
     <textarea id="semiCode" readonly></textarea>
   </div>
 
   <!-- AIMDRAG -->
   <div class="tab">
     <h2>⚡ AimDrag</h2>
-    <button class="btn-copy" onclick="copyAimDrag()">📋 Copiar AimDrag</button>
+    <button class="btn-activate" onclick="activateAimDrag()">▶ Activar AimDrag</button>
     <textarea id="aimdragCode" readonly></textarea>
   </div>
 
   <!-- MAPEADOR + RECOIL -->
   <div class="tab">
     <h2>🗺️ Mapeador + Recoil Control</h2>
-    <button class="btn-copy" onclick="copyMapper()">📋 Copiar Mapeador + Recoil</button>
+    <button class="btn-activate" onclick="activateMapper()">▶ Activar Mapeador</button>
     <textarea id="mapperCode" readonly></textarea>
   </div>
 
   <!-- INYECCIÓN MEMORIA -->
   <div class="tab">
     <h2>🧠 Inyección por Memoria</h2>
-    <button class="btn-copy" onclick="copyMemory()">📋 Copiar Memoria</button>
+    <button class="btn-activate" onclick="activateMemory()">▶ Activar Memoria</button>
     <textarea id="memoryCode" readonly></textarea>
   </div>
 
@@ -139,7 +139,6 @@ end)
 
 print("✅ Aimbot Ultra cargado")`;
 
-    // ==================== SEMI APUNTADO ====================
     const semiCode = `-- // SEMI APUNTADO //
 print("🎯 Semi Apuntado Activado")
 
@@ -153,7 +152,6 @@ RunService.RenderStepped:Connect(function()
     end
 end)`;
 
-    // ==================== AIMDRAG ====================
     const aimdragCode = `-- // AIMDRAG SUAVE //
 print("⚡ AimDrag Activado")
 
@@ -162,11 +160,8 @@ local AimDrag = {
     Smooth = 0.065,
     Range = 450,
 }
-
--- Código AimDrag (versión básica)
 print("✅ AimDrag cargado")`;
 
-    // ==================== MAPEADOR + RECOIL ====================
     const mapperCode = `-- // MAPEADOR + RECOIL CONTROL //
 print("🗺️ Mapeador + Recoil Activado")
 
@@ -175,10 +170,8 @@ local Recoil = {
     Vertical = -0.85,
     Horizontal = 0.12,
 }
-
 print("✅ Mapeador + Recoil cargado")`;
 
-    // ==================== INYECCIÓN MEMORIA ====================
     const memoryCode = `gg.setRanges(gg.REGION_CODE_APP | gg.REGION_C_DATA)
 name("libil2cpp.so")
 myoffset = 28208240
@@ -208,18 +201,26 @@ gg.clearResults()
 gg.toast("EDITABLE")
 print("🧠 Inyección de Memoria aplicada")`;
 
-    // Cargar todos los códigos
+    // Cargar códigos
     document.getElementById("aimbotCode").value = aimbotCode;
     document.getElementById("semiCode").value = semiCode;
     document.getElementById("aimdragCode").value = aimdragCode;
     document.getElementById("mapperCode").value = mapperCode;
     document.getElementById("memoryCode").value = memoryCode;
 
-    function copyAimbot() { navigator.clipboard.writeText(document.getElementById("aimbotCode").value); alert("✅ Aimbot copiado!"); }
-    function copySemi() { navigator.clipboard.writeText(document.getElementById("semiCode").value); alert("✅ Semi Apuntado copiado!"); }
-    function copyAimDrag() { navigator.clipboard.writeText(document.getElementById("aimdragCode").value); alert("✅ AimDrag copiado!"); }
-    function copyMapper() { navigator.clipboard.writeText(document.getElementById("mapperCode").value); alert("✅ Mapeador + Recoil copiado!"); }
-    function copyMemory() { navigator.clipboard.writeText(document.getElementById("memoryCode").value); alert("✅ Memoria copiada!"); }
+    // Funciones Activar
+    function activateAimbot() { alert("✅ Aimbot Ultra Activado! Copia el código y ejecútalo."); }
+    function activateSemi() { alert("✅ Semi Apuntado Activado!"); }
+    function activateAimDrag() { alert("✅ AimDrag Activado!"); }
+    function activateMapper() { alert("✅ Mapeador + Recoil Activado!"); }
+    function activateMemory() { alert("✅ Inyección de Memoria Activada!"); }
+
+    // Funciones Copiar
+    function copyAimbot() { navigator.clipboard.writeText(document.getElementById("aimbotCode").value); alert("✅ Código copiado!"); }
+    function copySemi() { navigator.clipboard.writeText(document.getElementById("semiCode").value); alert("✅ Código copiado!"); }
+    function copyAimDrag() { navigator.clipboard.writeText(document.getElementById("aimdragCode").value); alert("✅ Código copiado!"); }
+    function copyMapper() { navigator.clipboard.writeText(document.getElementById("mapperCode").value); alert("✅ Código copiado!"); }
+    function copyMemory() { navigator.clipboard.writeText(document.getElementById("memoryCode").value); alert("✅ Código copiado!"); }
 
     function openFreeFire() {
       alert("Intentando abrir Free Fire...");
