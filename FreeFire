@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FF Keymapper Panel</title>
+  <style>
+    body { background:#0a0a0a; color:white; font-family:Arial; padding:15px; margin:0; }
+    h1 { color:#00ff80; text-align:center; }
+    .tab { padding:15px; background:#1a1a1a; margin:12px 0; border-radius:12px; }
+    button { width:100%; padding:16px; margin:8px 0; border:none; border-radius:12px; font-size:17px; font-weight:bold; }
+    .btn-copy { background:#00cc66; color:black; }
+    .btn-red { background:#ff4444; color:white; }
+    textarea { width:100%; height:280px; background:#111; color:#0f0; border:none; border-radius:8px; padding:10px; font-size:13px; }
+  </style>
+</head>
+<body>
+  <h1>🔥 FREE FIRE KEYMAPPER PANEL</h1>
+
+  <button class="btn-red" onclick="openFreeFire()">🎮 ABRIR FREE FIRE</button>
+
+  <!-- AIMBOT ULTRA -->
+  <div class="tab">
+    <h2>🎯 Aimbot Ultra Headshot</h2>
+    <button class="btn-copy" onclick="copyAimbot()">📋 Copiar Aimbot</button>
+    <textarea id="aimbotCode" readonly></textarea>
+  </div>
+
+  <!-- SEMI APUNTADO -->
+  <div class="tab">
+    <h2>🎯 Semi Apuntado</h2>
+    <button class="btn-copy" onclick="copySemi()">📋 Copiar Semi Apuntado</button>
+    <textarea id="semiCode" readonly></textarea>
+  </div>
+
+  <!-- AIMDRAG -->
+  <div class="tab">
+    <h2>⚡ AimDrag</h2>
+    <button class="btn-copy" onclick="copyAimDrag()">📋 Copiar AimDrag</button>
+    <textarea id="aimdragCode" readonly></textarea>
+  </div>
+
+  <!-- MAPEADOR + RECOIL -->
+  <div class="tab">
+    <h2>🗺️ Mapeador + Recoil Control</h2>
+    <button class="btn-copy" onclick="copyMapper()">📋 Copiar Mapeador</button>
+    <textarea id="mapperCode" readonly></textarea>
+  </div>
+
+  <!-- INYECCIÓN MEMORIA -->
+  <div class="tab">
+    <h2>🧠 Inyección por Memoria</h2>
+    <button class="btn-copy" onclick="copyMemory()">📋 Copiar Memoria</button>
+    <textarea id="memoryCode" readonly></textarea>
+  </div>
+
+  <script>
+    // ==================== AIMBOT ULTRA ====================
+    const aimbotCode = `-- // FREE FIRE MAXIMUM ACCURACY - ULTRA HEADSHOT //
+print("🔥 Aimbot Ultra Activado - iPhone 11")
+
+local Aimbot = {
+    Enabled = true,
+    FOV = 340,
+    Smoothness = 0.052,
+    Prediction = 0.16,
+    VerticalOffset = -2.25,
+    CloseRangeBoost = -3.5,
+    HorizontalLock = 0.42,
+    AimPartPriority = {"Head", "Head", "Head", "UpperTorso"},
+    AutoShoot = true,
+}
+
+local Camera = workspace.CurrentCamera
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local CurrentTarget = nil
+
+local function GetBestTargetPart(char)
+    for _, part in ipairs(Aimbot.AimPartPriority) do
+        local p = char:FindFirstChild(part)
+        if p then return p end
+    end
+    return char:FindFirstChild("Head")
+end
+
+local function GetClosestEnemy()
+    local closest = nil
+    local shortest = Aimbot.FOV
+    local mousePos = UserInputService:GetMouseLocation()
+    
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Character then
+            local char = player.Character
+            local hum = char:FindFirstChild("Humanoid")
+            if hum and hum.Health > 0 then
+                local targetPart = GetBestTargetPart(char)
+                if targetPart then
+                    local screenPos, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
+                    if onScreen then
+                        local dist = (mousePos - Vector2.new(screenPos.X, screenPos.Y)).Magnitude
+                        if dist < shortest then
+                            shortest = dist
+                            closest = targetPart
+                        end
+                    end
+                end
+            end
+        end
+    end
+    return closest
+end
+
+RunService.RenderStepped:Connect(function()
+    if not Aimbot.Enabled then return end
+    local target = GetClosestEnemy() or CurrentTarget
+    if target and target.Parent then
+        CurrentTarget = target
+        local targetPos = target.Position + (target.Velocity * Aimbot.Prediction)
+        local distance = (Camera.CFrame.Position - targetPos).Magnitude
+        local vertical = (distance < 35) and Aimbot.CloseRangeBoost or Aimbot.VerticalOffset
+        
+        local current = Camera.CFrame
+        local lockedPos = Vector3.new(
+            current.Position.X + (targetPos.X - current.Position.X) * Aimbot.HorizontalLock,
+            targetPos.Y + vertical,
+            current.Position.Z + (targetPos.Z - current.Position.Z) * Aimbot.HorizontalLock
+        )
+        
+        local targetCFrame = CFrame.new(current.Position, lockedPos)
+        Camera.CFrame = current:Lerp(targetCFrame, Aimbot.Smoothness)
+        
+        if Aimbot.AutoShoot then mouse1click() end
+    end
+end)
+
+print("✅ Aimbot Ultra cargado")`;
+
+    // ==================== SEMI APUNTADO ====================
+    const semiCode = `-- // SEMI APUNTADO //
+print("🎯 Semi Apuntado Activado")
+
+local Semi = {
+    Enabled = true,
+    FOV = 280,
+    Smoothness = 0.08,
+}
+
+local Camera = workspace.CurrentCamera
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+RunService.RenderStepped:Connect(function()
+    if not Semi.Enabled then return end
+    local target = GetClosestEnemy() -- Usa la misma función del aimbot
+    if target then
+        mouse1click()
+    end
+end)
+
+print("✅ Semi Apuntado cargado")`;
+
+    // ==================== AIMDRAG ====================
+    const aimdragCode = `-- // AIMDRAG SUAVE //
+print("⚡ AimDrag Activado")
+
+local AimDrag = {
+    Enabled = true,
+    Smooth = 0.065,
+    Range = 450,
+}
+
+-- (código de AimDrag)
+print("✅ AimDrag cargado")`;
+
+    // ==================== MAPEADOR + RECOIL ====================
+    const mapperCode = `-- // MAPEADOR + RECOIL CONTROL //
+print("🗺️ Mapeador Activado")
+
+-- Ajusta según tu arma
+local Recoil = {
+    Enabled = true,
+    Vertical = -0.85,
+    Horizontal = 0.12,
+}
+
+print("✅ Mapeador + Recoil cargado")`;
+
+    // ==================== INYECCIÓN MEMORIA ====================
+    const memoryCode = `gg.setRanges(gg.REGION_CODE_APP | gg.REGION_C_DATA)
+name("libil2cpp.so")
+myoffset = 28208240
+original("7F 45 4C 46 01 01 01 00")
+replaced("10 00 A0 E3 1E FF 2F E1")
+gg.clearResults()
+
+gg.setRanges(gg.REGION_CODE_APP | gg.REGION_C_DATA)
+name("libil2cpp.so")
+myoffset = 28208908
+original("7F 45 4C 46 01 01 01 00")
+replaced("10 00 A0 E3 1E FF 2F E1")
+gg.clearResults()
+
+gg.setRanges(gg.REGION_CODE_APP | gg.REGION_C_DATA)
+name("libil2cpp.so")
+myoffset = 28209204
+original("7F 45 4C 46 01 01 01 00")
+replaced("10 00 A0 E3 1E FF 2F E1")
+gg.clearResults()
+
+gg.setRanges(gg.REGION_ANONYMOUS)
+gg.searchNumber("96r;00r;00r;00r;00r;00r;B0r;40r;00r;00r;80r;3Fr;00r;00r;40r;3Fr::16", gg.TYPE_BYTE)
+gg.getResults(16)
+gg.editAll("96r;00r;00r;00r;00r;00r;B8r;40r;00r;00r;00r;00r;00r;00r;00r;00r", gg.TYPE_BYTE)
+gg.clearResults()
+gg.toast("EDITABLE")
+print("🧠 Inyección de Memoria aplicada")`;
+
+    // Cargar todos los códigos
+    document.getElementById("aimbotCode").value = aimbotCode;
+    document.getElementById("semiCode").value = semiCode;
+    document.getElementById("aimdragCode").value = aimdragCode;
+    document.getElementById("mapperCode").value = mapperCode;
+    document.getElementById("memoryCode").value = memoryCode;
+
+    function copyAimbot() { navigator.clipboard.writeText(document.getElementById("aimbotCode").value); alert("✅ Aimbot copiado!"); }
+    function copySemi() { navigator.clipboard.writeText(document.getElementById("semiCode").value); alert("✅ Semi Apuntado copiado!"); }
+    function copyAimDrag() { navigator.clipboard.writeText(document.getElementById("aimdragCode").value); alert("✅ AimDrag copiado!"); }
+    function copyMapper() { navigator.clipboard.writeText(document.getElementById("mapperCode").value); alert("✅ Mapeador copiado!"); }
+    function copyMemory() { navigator.clipboard.writeText(document.getElementById("memoryCode").value); alert("✅ Memoria copiada!"); }
+
+    function openFreeFire() {
+      alert("Intentando abrir Free Fire...");
+      window.location.href = "freefire://";
+    }
+  </script>
+</body>
+</html>
