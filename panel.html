@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FF Panel Simple</title>
+  <style>
+    body {
+      background: #000;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 { color: #00ff80; margin: 20px 0; }
+    button {
+      width: 90%;
+      padding: 18px;
+      margin: 12px 0;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+    .on { background: #00ff80; color: black; }
+    .red { background: #ff4444; color: white; }
+    .info { background: #111; padding: 15px; border-radius: 10px; margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <h1>🔥 FF PANEL SIMPLE</h1>
+  
+  <div class="info">
+    <strong>AIMBOT:</strong> <span id="estado" style="color:#00ff80">ACTIVADO</span>
+  </div>
+
+  <button class="on" onclick="toggle()">🔄 ON / OFF AIMBOT</button>
+  <button class="on" onclick="openFF()">🎮 ABRIR FREE FIRE</button>
+  <button class="red" onclick="resetPanel()">RESET PANEL</button>
+
+  <p style="margin-top:30px; color:#666;">Panel de prueba - iPhone 11</p>
+
+  <script>
+    let activado = true;
+
+    function toggle() {
+      activado = !activado;
+      document.getElementById("estado").textContent = activado ? "ACTIVADO" : "DESACTIVADO";
+      document.getElementById("estado").style.color = activado ? "#00ff80" : "#ff4444";
+      alert("Aimbot " + (activado ? "Activado ✅" : "Desactivado ❌"));
+    }
+
+    function openFF() {
+      alert("Intentando abrir Free Fire...");
+      window.location.href = "freefire://";
+    }
+
+    function resetPanel() {
+      if(confirm("¿Resetear panel?")) {
+        location.reload();
+      }
+    }
+  </script>
+</body>
+</html>
